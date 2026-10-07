@@ -2,7 +2,7 @@
 // En localhost vamos al backend local, fuera al de produccion
 const API_BASE = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
     ? 'http://localhost:8000'
-    : 'https://bonobo-backend.onrender.com';
+    : 'https://bonobo-backend-bladimir.onrender.com';
 
 // Escapa texto del usuario antes de meterlo con innerHTML (anti-XSS)
 function escapeHTML(str) {
