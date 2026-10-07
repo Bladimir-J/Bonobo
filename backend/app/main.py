@@ -10,9 +10,8 @@ app = FastAPI(title="Bonobo API")
 # los navegadores rechazan esa combinacion.
 origins = [
     "https://bonobo-ten.vercel.app",
-    "http://localhost:3000",
-    "http://localhost:5500",
-    "http://127.0.0.1:5500",
+    "https://bonobo-ruby.vercel.app",
+   "http://localhost:3000",
 ]
 
 app.add_middleware(
