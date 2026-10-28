@@ -1,0 +1,22 @@
+name: Mantener Bonobo despierto
+
+on:
+  schedule:
+    - cron: "0 8 */3 * *"
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Despertar backend y consultar la base de datos
+        run: |
+          for i in 1 2 3; do
+            if curl -fsS --max-time 90 "https://bonobo-backend-bladimir.onrender.com/api/usuarios/buscar?q=a"; then
+              echo "Bonobo despierto"
+              exit 0
+            fi
+            echo "Intento $i fallido, reintentando en 30 segundos..."
+            sleep 30
+          done
+          exit 1
