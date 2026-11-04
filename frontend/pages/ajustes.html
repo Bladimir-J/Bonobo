@@ -22,7 +22,20 @@
             </div>
 
             <div class="form-grupo">
-                <label class="form-label">URL del avatar</label>
+                <label class="form-label">Foto de perfil</label>
+                <div class="avatar-editor">
+                    <div class="avatar-preview" id="avatarPreview"></div>
+                    <div class="avatar-acciones">
+                        <!-- el input real esta oculto; el boton lo abre -->
+                        <input type="file" id="inputAvatarArchivo" accept="image/jpeg,image/png,image/webp" hidden />
+                        <button class="btn btn--ghost" type="button" id="btnSubirAvatar">Subir desde el dispositivo</button>
+                        <button class="avatar-quitar" type="button" id="btnQuitarAvatar">Quitar foto</button>
+                        <p class="avatar-ayuda" id="avatarAyuda">JPG, PNG o WEBP. Se recorta en cuadrado.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="form-grupo">
+                <label class="form-label">…o pega la URL de una imagen</label>
                 <input class="form-input" type="url" id="inputAvatar" placeholder="https://…" />
             </div>
             <div class="form-grupo">

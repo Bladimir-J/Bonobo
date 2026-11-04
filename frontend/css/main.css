@@ -2546,3 +2546,44 @@ img { display: block; max-width: 100%; }
     .perfil-username { font-size: 22px; }
     .hero-cta        { flex-direction: column; align-items: center; }
 }
+
+
+/* AJUSTES: foto de perfil (subir desde el dispositivo o URL) */
+.avatar-editor {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+.avatar-preview {
+    width: 80px;
+    height: 80px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    border: 2px solid var(--border2);
+    background: var(--surface2) center / cover no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display);
+    font-size: 28px;
+    color: var(--muted);
+}
+.avatar-acciones {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+}
+.avatar-quitar {
+    background: none;
+    border: none;
+    padding: 0;
+    font-size: 12px;
+    color: var(--muted);
+    cursor: pointer;
+}
+.avatar-quitar:hover { color: var(--error); }
+.avatar-ayuda {
+    font-size: 11px;
+    color: var(--faint);
+}

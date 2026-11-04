@@ -1,3 +1,4 @@
+import re
 from pydantic import BaseModel, EmailStr, ConfigDict, Field, field_validator
 from datetime import datetime
 from typing import Optional
@@ -80,6 +81,11 @@ class UserProfile(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 
 
+# avatar subido desde el dispositivo (ver UserUpdate)
+AVATAR_DATA_URL = re.compile(r'data:image/(jpeg|png|webp);base64,[A-Za-z0-9+/]+={0,2}')
+AVATAR_MAX_DATA_URL = 200_000   # ~150 KB de imagen; una de 256x256 ocupa unos 15-30 KB
+
+
 class UserUpdate(BaseModel):
     bio: Optional[str] = Field(None, max_length=250)
     avatar_url: Optional[str] = None
@@ -87,9 +93,24 @@ class UserUpdate(BaseModel):
     @field_validator('avatar_url')
     @classmethod
     def validar_avatar_url(cls, v: Optional[str]) -> Optional[str]:
-        # como minimo que sea http(s), no me vale "javascript:..." ni rutas raras
-        if v and not v.startswith(('http://', 'https://')):
+        if not v:
+            return v
+
+        # 1) foto subida desde el dispositivo: el navegador la recorta a 256x256
+        #    y la manda como data URL. Solo aceptamos jpeg/png/webp en base64
+        #    (nada de svg, que puede llevar codigo) y con un tamaño maximo.
+        if v.startswith('data:'):
+            if not AVATAR_DATA_URL.fullmatch(v):
+                raise ValueError('La imagen debe ser JPG, PNG o WEBP')
+            if len(v) > AVATAR_MAX_DATA_URL:
+                raise ValueError('La imagen es demasiado grande')
+            return v
+
+        # 2) URL normal: como minimo que sea http(s), no me vale "javascript:..."
+        if not v.startswith(('http://', 'https://')):
             raise ValueError('La URL del avatar debe empezar por http:// o https://')
+        if len(v) > 1000:
+            raise ValueError('La URL del avatar es demasiado larga')
         return v
 
 

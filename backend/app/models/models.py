@@ -13,7 +13,7 @@ class Usuario(Base):
     username = Column(String(50), nullable=False, unique=True)
     password_hash = Column(String(255), nullable=False)
     bio = Column(Text, nullable=True)
-    avatar_url = Column(String(500), nullable=True)
+    avatar_url = Column(Text, nullable=True)  # URL o foto subida (data URL)
     created_at = Column(TIMESTAMP(timezone=True), nullable=False, server_default=text("now()"))
     xp_total = Column(Integer, nullable=False, server_default=text("0"))
     nivel = Column(Integer, nullable=False, server_default=text("1"))
