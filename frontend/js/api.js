@@ -63,6 +63,11 @@ const api = {
     auth: {
         registro: (body) => _req('POST', '/api/auth/registro', body),
 
+        // recuperar contraseña: 1) pedir el enlace por email, 2) poner la nueva
+        olvidePassword: (email) => _req('POST', '/api/auth/olvide-password', { email }),
+        restablecerPassword: (token, password_nueva) =>
+            _req('POST', '/api/auth/restablecer-password', { token, password_nueva }),
+
         // login va con form-urlencoded porque OAuth2 de FastAPI lo pide asi
         login: async (email, password) => {
             const form = new URLSearchParams();

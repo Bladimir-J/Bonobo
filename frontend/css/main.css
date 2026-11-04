@@ -630,6 +630,28 @@ img { display: block; max-width: 100%; }
 .form-footer a { color: var(--accent); }
 .form-footer a:hover { color: var(--accent-hover); }
 
+/* Recuperar contraseña */
+.form-link-olvido {
+    display: inline-block;
+    margin-top: 8px;
+    font-size: 12px;
+    color: var(--muted);
+}
+.form-link-olvido:hover { color: var(--accent); }
+
+.form-exito {
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--success);
+    background: rgba(34, 197, 94, 0.08);
+    border: 1px solid rgba(34, 197, 94, 0.25);
+    border-radius: var(--radius-sm);
+    padding: 12px 14px;
+    margin-top: 4px;
+    display: none;
+}
+.form-exito--visible { display: block; }
+
 /* DETALLE DE PELÍCULA */
 
 /* Cabecera con el póster como fondo difuminado */

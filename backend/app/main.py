@@ -1,5 +1,9 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Depends
+from sqlalchemy import text
+from sqlalchemy.orm import Session
 from fastapi.middleware.cors import CORSMiddleware
+from . import database
+from .services import email_service
 from .routers import auth, peliculas, acciones, usuarios, social, diario, listas, logros
 
 app = FastAPI(title="Bonobo API")
@@ -37,3 +41,12 @@ app.include_router(logros.router)
 def root():
     # endpoint tonto para comprobar que la api responde
     return {"message": "Bonobo API funcionando"}
+
+
+# Lo visita GitHub Actions cada 3 dias (.github/workflows/mantener-despierto.yml)
+# para que Render se despierte, Supabase no se pause por inactividad y la
+# clave de Brevo no caduque por no usarse.
+@app.get("/api/salud")
+def salud(db: Session = Depends(database.get_db)):
+    db.execute(text("SELECT 1"))
+    return {"api": "ok", "base_de_datos": "ok", "email": email_service.mantener_clave_activa()}

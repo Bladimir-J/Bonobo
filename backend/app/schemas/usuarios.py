@@ -26,6 +26,15 @@ class UserLogin(BaseModel):
     password: str
 
 
+class OlvidePassword(BaseModel):
+    email: EmailStr
+
+
+class RestablecerPassword(BaseModel):
+    token: str = Field(..., min_length=10, max_length=2000)
+    password_nueva: str = Field(..., min_length=8, max_length=128)
+
+
 class Token(BaseModel):
     access_token: str
     token_type: str

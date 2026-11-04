@@ -1,3 +1,4 @@
+import hashlib
 from jose import JWTError, jwt
 from datetime import datetime, timedelta, timezone
 from . import schemas, database, models
@@ -25,6 +26,57 @@ def create_access_token(data: dict):
     to_encode.update({"exp": expire})
     encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
     return encoded_jwt
+
+
+#  RECUPERAR CONTRASEÑA
+# El token del enlace del correo es un JWT aparte del de sesion:
+#  - usa la clave "reset_user_id" (no "user_id"), asi no sirve para iniciar sesion
+#  - lleva purpose="reset", asi un token de sesion no sirve para cambiar la contraseña
+#  - lleva una huella del hash actual de la contraseña: en cuanto se cambia la
+#    contraseña la huella deja de coincidir y el enlace ya no vale (un solo uso)
+RESET_TOKEN_EXPIRE_MINUTES = 30
+
+
+def _huella_password(password_hash: str) -> str:
+    return hashlib.sha256(password_hash.encode("utf-8")).hexdigest()[:16]
+
+
+def create_reset_token(user: models.Usuario) -> str:
+    expire = datetime.now(timezone.utc) + timedelta(minutes=RESET_TOKEN_EXPIRE_MINUTES)
+    to_encode = {
+        "reset_user_id": user.id,
+        "purpose": "reset",
+        "pwd": _huella_password(user.password_hash),
+        "exp": expire,
+    }
+    return jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
+
+
+def verify_reset_token(token: str, db: Session):
+    """Devuelve el usuario del token, o None si el enlace no es valido."""
+    try:
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+    except JWTError:
+        return None
+
+    if payload.get("purpose") != "reset":
+        return None
+
+    user_id = payload.get("reset_user_id")
+    if user_id is None:
+        return None
+
+    user = db.execute(
+        select(models.Usuario).where(models.Usuario.id == user_id)
+    ).scalar_one_or_none()
+    if user is None:
+        return None
+
+    # si la contraseña ya cambio desde que se envio el correo, el enlace caduca
+    if payload.get("pwd") != _huella_password(user.password_hash):
+        return None
+
+    return user
 
 
 def verify_access_token(token: str, credentials_exception):
