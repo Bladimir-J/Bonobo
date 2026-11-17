@@ -42,7 +42,7 @@ function renderNav(base = '') {
     const navHTML = `
         <nav class="navbar">
             <div class="nav-inner">
-                <a href="${base}index.html" class="nav-logo">BONOBO</a>
+                <a href="${base}index.html" class="nav-logo" aria-label="Bonobo, inicio">B<span class="nav-logo__o">o</span>N<span class="nav-logo__o">o</span>B<span class="nav-logo__o">o</span></a>
 
                 <div class="nav-search-wrap">
                     <svg class="nav-search-icon" viewBox="0 0 20 20" fill="none">

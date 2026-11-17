@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Icono de Bonobo: cuadrado naranja con BNB -->
+  <rect width="64" height="64" rx="14" fill="#e8a020"/>
+  <text x="32" y="43" text-anchor="middle" font-family="Oswald, 'Arial Narrow', Arial, sans-serif" font-weight="700" font-size="26" textLength="46" lengthAdjust="spacingAndGlyphs" fill="#0e0e12">BNB</text>
+</svg>

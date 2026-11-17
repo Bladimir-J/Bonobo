@@ -2,7 +2,7 @@
    Fuentes: Bebas Neue (titulares) + Inter (cuerpo)
    Acento ambar/dorado sobre tema oscuro */
 
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@500;700&family=Inter:wght@300;400;500;600&display=swap');
 
 /* Variables globales: colores y medidas del sistema en un solo sitio */
 :root {
@@ -111,11 +111,18 @@ img { display: block; max-width: 100%; }
 
 /* Logo */
 .nav-logo {
-    font-family: var(--font-display);
-    font-size: 28px;
-    letter-spacing: 0.05em;
-    color: var(--accent);
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 26px;
+    line-height: 1;
+    letter-spacing: 0.02em;
+    color: var(--accent);       /* B, N, B en naranja */
     flex-shrink: 0;
+}
+/* las "o" del logo BoNoBo en blanco y un poco mas finas */
+.nav-logo__o {
+    color: var(--text);
+    font-weight: 500;
 }
 
 /* Caja del buscador — ocupa el espacio disponible */
