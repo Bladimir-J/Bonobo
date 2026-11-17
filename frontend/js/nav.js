@@ -241,3 +241,15 @@ function renderNav(base = '') {
         }
     });
 }
+
+
+// App instalable (PWA): registramos el service worker una vez por pagina.
+// Esta en la raiz de la web (sw.js), asi controla todas las paginas.
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        const raiz = location.pathname.includes('/pages/') ? '../' : './';
+        navigator.serviceWorker.register(raiz + 'sw.js').catch((err) => {
+            console.warn('[pwa] no se pudo registrar el service worker', err);
+        });
+    });
+}
