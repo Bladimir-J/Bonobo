@@ -10,8 +10,27 @@
     <meta name="theme-color" content="#0e0e12" />
     <meta name="apple-mobile-web-app-title" content="Bonobo" />
     <link rel="stylesheet" href="css/main.css" />
+    <script>
+        // Pantalla de bienvenida: solo al abrir la APP instalada y una vez por sesion.
+        // Se decide aqui, antes de pintar nada, para que nunca parpadee en la web normal.
+        (function () {
+            try {
+                var esApp = window.matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
+                if (esApp && !sessionStorage.getItem('bnb_splash')) {
+                    document.documentElement.classList.add('con-splash');
+                }
+            } catch (e) { /* sin sessionStorage: no pasa nada, no se muestra */ }
+        })();
+    </script>
 </head>
 <body>
+
+    <!-- Pantalla de bienvenida de la app (ver css "SPLASH") -->
+    <div class="splash" id="splash" aria-hidden="true">
+        <div class="splash-logo">
+            <span class="splash-letra">B</span><img class="splash-o" src="img/o-bonobo.svg" alt=""><span class="splash-letra">N</span><img class="splash-o" src="img/o-bonobo.svg" alt=""><span class="splash-letra">B</span><img class="splash-o" src="img/o-bonobo.svg" alt="">
+        </div>
+    </div>
 
     <!-- El navbar se inyecta aquí por nav.js -->
     <header id="nav-placeholder"></header>
@@ -88,5 +107,20 @@
     <script src="js/logros-notif.js"></script>
     <script src="js/home.js"></script>
 
+    <script>
+        // quita la pantalla de bienvenida al acabar la animacion (o al tocarla)
+        (function () {
+            var raiz = document.documentElement;
+            if (!raiz.classList.contains('con-splash')) return;
+            try { sessionStorage.setItem('bnb_splash', '1'); } catch (e) {}
+            var splash = document.getElementById('splash');
+            var quitar = function () { raiz.classList.remove('con-splash'); };
+            splash.addEventListener('animationend', function (e) {
+                if (e.animationName === 'splash-fuera') quitar();
+            });
+            splash.addEventListener('click', quitar);
+            setTimeout(quitar, 2500);   // por si acaso
+        })();
+    </script>
 </body>
 </html>

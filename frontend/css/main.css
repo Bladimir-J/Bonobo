@@ -2605,3 +2605,63 @@ img { display: block; max-width: 100%; }
     font-size: 11px;
     color: var(--faint);
 }
+
+
+/* ============================================================
+   SPLASH: pantalla de bienvenida al abrir la app instalada
+   (solo con html.con-splash, que pone index.html)
+   ============================================================ */
+.splash { display: none; }
+
+html.con-splash .splash {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg);
+    animation: splash-fuera 0.35s ease-in 1.05s forwards;
+}
+html.con-splash body { overflow: hidden; }
+
+.splash-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.02em;
+    font-family: var(--font-display);
+    font-size: clamp(64px, 20vw, 140px);
+    line-height: 1;
+    color: var(--accent);
+}
+.splash-letra {
+    opacity: 0;
+    animation: splash-letra 0.35s ease-out forwards;
+}
+.splash-o {
+    height: 0.7em;
+    width: auto;
+    opacity: 0;
+    transform: scale(0.4);
+    animation: splash-pop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+/* las caras entran una detras de otra */
+.splash-o:nth-of-type(1) { animation-delay: 0.15s; }
+.splash-o:nth-of-type(2) { animation-delay: 0.30s; }
+.splash-o:nth-of-type(3) { animation-delay: 0.45s; }
+
+@keyframes splash-letra {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: none; }
+}
+@keyframes splash-pop {
+    to { opacity: 1; transform: scale(1); }
+}
+@keyframes splash-fuera {
+    to { opacity: 0; visibility: hidden; }
+}
+
+/* quien tiene activado "reducir animaciones": logo fijo y solo el fundido */
+@media (prefers-reduced-motion: reduce) {
+    .splash-letra, .splash-o { animation: none; opacity: 1; transform: none; }
+}
