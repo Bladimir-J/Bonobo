@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 106">
+  <!-- La "O" de BONOBO con cara de bonobo. Los huecos de la cara son transparentes. -->
+  <defs>
+    <mask id="cara">
+      <rect width="80" height="106" fill="#fff"/>
+      <circle cx="31" cy="47" r="12.5" fill="#000"/>
+      <circle cx="49" cy="47" r="12.5" fill="#000"/>
+      <ellipse cx="40" cy="70" rx="18" ry="16" fill="#000"/>
+    </mask>
+  </defs>
+  <g fill="#e8a020">
+    <circle cx="7" cy="54" r="8"/>
+    <circle cx="73" cy="54" r="8"/>
+    <ellipse cx="40" cy="53" rx="32" ry="51" mask="url(#cara)"/>
+    <circle cx="31.5" cy="48" r="3.6"/>
+    <circle cx="48.5" cy="48" r="3.6"/>
+    <circle cx="36.5" cy="64" r="1.7"/>
+    <circle cx="43.5" cy="64" r="1.7"/>
+  </g>
+  <path d="M33 74 Q40 79 47 74" fill="none" stroke="#e8a020" stroke-width="2.6" stroke-linecap="round"/>
+</svg>

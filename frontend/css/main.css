@@ -354,6 +354,17 @@ img { display: block; max-width: 100%; }
     color: var(--accent);   /* resaltamos "Bonobo" en ámbar */
 }
 
+/* BONOBO del hero: las "O" son caras de bonobo (img/o-bonobo.svg) */
+.hero-titulo .hero-logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.02em;
+}
+.hero-logo__o {
+    height: 0.7em;      /* misma altura que las mayusculas de Bebas Neue */
+    width: auto;
+}
+
 .hero-desc {
     font-size: 16px;
     color: var(--muted);
